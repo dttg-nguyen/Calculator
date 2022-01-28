@@ -9,18 +9,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button num0, num1, num2, num3, num4, num5, num6, num7, num8, num9;
-    Button plus, minus,multiply, divide;
-    Button equal;
-    Button clear;
+    private Button num0, num1, num2, num3, num4, num5, num6, num7, num8, num9;
+    private Button plus, minus, multiply, divide;
+    private Button equal;
+    private Button clear;
 
-    Button calculatorMode;
-    Button modulus, power, max, min;
-    LinearLayout advanceLayout;
-    TextView output;
-    String calculationString = " ";
+    private Button calculatorMode;
+    private Button modulus, power, max, min;
 
-    Calculator calculator = new Calculator();
+    private LinearLayout advanceLayout;
+    private TextView output;
+    private String calculationString = " ";
+
+    private Calculator calculator = new Calculator();
+    private int mode = 1;   // Standard mode
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +56,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         min = findViewById(R.id.min);
 
         advanceLayout = findViewById(R.id.advance_buttons_layout);
-        // Set the mode at the start
-        calculatorMode.setText("ADVANCE - SCIENTIFIC");
         advanceLayout.setVisibility(View.INVISIBLE);
 
         num0.setOnClickListener(this);
@@ -176,9 +176,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             calculationString += v.getText().toString();
             output.setText(calculationString);
             int result = calculator.calculate();
-            if(result == Calculator.ERROR_VALUE){
+            if (result == Calculator.ERROR_VALUE) {
                 calculationString += "Not an Operator";
-            } else{
+            } else {
                 calculationString += result;
             }
             output.setText(calculationString);
@@ -191,21 +191,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         // Part 2
-        if(id == R.id.modulus || id == R.id.power || id == R.id.max || id == R.id.min){
+        if (id == R.id.modulus || id == R.id.power || id == R.id.max || id == R.id.min) {
             calculationString += v.getText().toString();
             output.setText(calculationString);
 
             calculator.push(v.getText().toString());
         }
 
-        if(id == R.id.calculator_mode){
-            if(v.getText().toString() == "STANDARD"){
-                v.setText("ADVANCE - SCIENTIFIC");
-                advanceLayout.setVisibility(View.INVISIBLE);
-            } else{
+        if (id == R.id.calculator_mode) {
+            if (mode == 1) {
                 v.setText("STANDARD");
+                switchCalculatorMode();
                 advanceLayout.setVisibility(View.VISIBLE);
+            } else {
+                v.setText("ADVANCE - SCIENTIFIC");
+                switchCalculatorMode();
+                advanceLayout.setVisibility(View.INVISIBLE);
             }
         }
+    }
+
+    private void switchCalculatorMode() {
+        mode = mode == 1 ? 2 : 1;
     }
 }

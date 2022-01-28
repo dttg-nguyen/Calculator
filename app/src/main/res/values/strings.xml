@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Calculator</string>
     <string name="title">Assignment 1</string>
-    <string name="calculator_mode_toggle">STANDARD</string>
+    <string name="calculator_mode_toggle">ADVANCE - SCIENTIFIC</string>
 </resources>

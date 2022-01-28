@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Calculator {
     public static final int ERROR_VALUE = Integer.MIN_VALUE;
-    private final int MIN_SIZE = 3;             // The minimum number of elements to make up an expression
+    private final int MIN_SIZE = 3;             // The minimum number of elements to make up a valid expression
 
     private final List<String> listOfValues;
 
