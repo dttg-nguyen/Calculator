@@ -17,17 +17,13 @@ public class Calculator {
         listOfValues.add(value);
     }
 
-    public void clearCalculator() {
-        listOfValues.clear();
-    }
+    public void clearCalculator() { listOfValues.clear(); }
 
     public int calculate() {
         // Validate that the size is larger than the minimum size
         if (listOfValues.size() < MIN_SIZE) {
             return ERROR_VALUE;
         }
-
-        int result = 0;
 
         // Pop the first 3 elements from the list
         String num1 = pop();
@@ -41,12 +37,12 @@ public class Calculator {
             return ERROR_VALUE;
         }
 
-        result = calculateExpression(Integer.parseInt(num1), operator, Integer.parseInt(num2));
+        int result = calculateExpression(Integer.parseInt(num1), operator, Integer.parseInt(num2));
         if (result == ERROR_VALUE) {
             return result;
         }
 
-        // If the size of the list after the 1st iteration is odd, the expression is invalid.
+        // After 1st iteration, if the size of the list is an odd number, the expression is invalid.
         if (listOfValues.size() % 2 != 0) {
             return ERROR_VALUE;
         }
@@ -70,14 +66,13 @@ public class Calculator {
         return result;
     }
 
-    private boolean validate(String s1, String s2, String s3) {
-        return isNum(s1) && isOperator(s2) && isNum(s3);
-    }
+    private boolean validate(String s1, String s2, String s3) { return isNum(s1) && isOperator(s2) && isNum(s3); }
 
     private boolean validate(String s1, String s2) {
         return isOperator(s1) && isNum(s2);
     }
 
+    // Validate if it is a number
     private boolean isNum(String s) {
         try {
             Integer.parseInt(s);
@@ -87,6 +82,7 @@ public class Calculator {
         return true;
     }
 
+    // Validate if it is a string
     private boolean isOperator(String s) {
         return s != null && (s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/")
                 || s.equals("%") || s.equals("pow") || s.equals("Max") || s.equals("Min"));
