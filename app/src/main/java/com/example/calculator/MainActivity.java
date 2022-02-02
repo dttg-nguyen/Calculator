@@ -86,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (id == R.id.equal) {
             resultString += " " + buttonText;
-            output.setText(resultString);
 
             int result = calculator.calculate();
             if (result == Calculator.ERROR_VALUE) {
