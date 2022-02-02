@@ -7,7 +7,7 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="title_color">#BB3B0E</color>
+    <color name="title_color">#AA2B1D</color>
     <color name="button_color">#DD7631</color>
-    <color name="calMode_color">#708160</color>
+    <color name="calMode_color">#519259</color>
 </resources>
