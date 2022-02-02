@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Calculator {
     public static final int ERROR_VALUE = Integer.MIN_VALUE;
-    private final int MIN_SIZE = 3;             // The minimum number of elements to make up a valid expression
+    private static final int MIN_SIZE = 3;             // The minimum number of elements to make up a valid expression
 
     private final List<String> listOfValues;
 
@@ -17,9 +17,13 @@ public class Calculator {
         listOfValues.add(value);
     }
 
+    public void clearCalculator() {
+        listOfValues.clear();
+    }
+
     public int calculate() {
-        // Check if the list is empty or the size is not larger than the minimum size
-        if (listOfValues.isEmpty() || listOfValues.size() < MIN_SIZE) {
+        // Validate that the size is larger than the minimum size
+        if (listOfValues.size() < MIN_SIZE) {
             return ERROR_VALUE;
         }
 
@@ -31,42 +35,15 @@ public class Calculator {
         String num2 = pop();
 
         // Validate 3 elements to be numbers and operator
-        boolean isValid = validateOperator(num1, operator, num2);
+        boolean isValid = validate(num1, operator, num2);
 
         if (isValid) {
-            result += Integer.parseInt(num1);
-
-            switch (operator) {
-                case "+":
-                    result += Integer.parseInt(num2);
-                    break;
-                case "-":
-                    result -= Integer.parseInt(num2);
-                    break;
-                case "*":
-                    result *= Integer.parseInt(num2);
-                    break;
-                case "/":
-                    result /= Integer.parseInt(num2);
-                    break;
-                case "%":
-                    result %= Integer.parseInt(num2);
-                    break;
-                case "pow":
-                    result = (int) Math.pow(result, Integer.parseInt(num2));
-                    break;
-                case "Max":
-                    result = Math.max(result, Integer.parseInt(num2));
-                    break;
-                case "Min":
-                    result = Math.min(result, Integer.parseInt(num2));
-                    break;
-            }
+           result = calculateExpression(Integer.parseInt(num1), operator, Integer.parseInt(num2));
         } else {
             return ERROR_VALUE;
         }
 
-        // If the size after the 1st iteration is odd, the expression is invalid.
+        // If the size of the list after the 1st iteration is odd, the expression is invalid.
         if (listOfValues.size() % 2 != 0) {
             return ERROR_VALUE;
         }
@@ -76,35 +53,10 @@ public class Calculator {
             operator = pop();
             num2 = pop();
 
-            isValid = validateOperator(operator, num2);
+            isValid = validate(operator, num2);
 
             if (isValid) {
-                switch (operator) {
-                    case "+":
-                        result += Integer.parseInt(num2);
-                        break;
-                    case "-":
-                        result -= Integer.parseInt(num2);
-                        break;
-                    case "*":
-                        result *= Integer.parseInt(num2);
-                        break;
-                    case "/":
-                        result /= Integer.parseInt(num2);
-                        break;
-                    case "%":
-                        result %= Integer.parseInt(num2);
-                        break;
-                    case "pow":
-                        result = (int) Math.pow(result, Integer.parseInt(num2));
-                        break;
-                    case "Max":
-                        result = Math.max(result, Integer.parseInt(num2));
-                        break;
-                    case "Min":
-                        result = Math.min(result, Integer.parseInt(num2));
-                        break;
-                }
+                result = calculateExpression(result, operator, Integer.parseInt(num2));
             } else {
                 return ERROR_VALUE;
             }
@@ -112,11 +64,11 @@ public class Calculator {
         return result;
     }
 
-    private boolean validateOperator(String s1, String s2, String s3) {
+    private boolean validate(String s1, String s2, String s3) {
         return isNum(s1) && isOperator(s2) && isNum(s3);
     }
 
-    private boolean validateOperator(String s1, String s2) {
+    private boolean validate(String s1, String s2) {
         return isOperator(s1) && isNum(s2);
     }
 
@@ -130,11 +82,8 @@ public class Calculator {
     }
 
     private boolean isOperator(String s) {
-        if (s == null || (!s.equals("+") && !s.equals("-") && !s.equals("*") && !s.equals("/")
-                && !s.equals("%") && !s.equals("pow") && !s.equals("Max") && !s.equals("Min"))) {
-            return false;
-        }
-        return true;
+        return s != null && (s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/")
+                || s.equals("%") || s.equals("pow") || s.equals("Max") || s.equals("Min"));
     }
 
     // Pop the first element from the array list
@@ -144,7 +93,30 @@ public class Calculator {
         return result;
     }
 
-    public void clearCalculator() {
-        listOfValues.clear();
+    private int calculateExpression(int num1, String operator, int num2) {
+        switch (operator) {
+            case "+":
+                return num1 + num2;
+            case "-":
+                return num1 - num2;
+            case "*":
+                return num1 * num2;
+            case "/":
+                if (num2 != 0) {
+                    return num1 / num2;
+                } else {
+                    return ERROR_VALUE;
+                }
+            case "%":
+                return num1 % num2;
+            case "pow":
+                return (int) Math.pow(num1, num2);
+            case "Max":
+                return Math.max(num1, num2);
+            case "Min":
+                return Math.min(num1, num2);
+            default:
+                return ERROR_VALUE;
+        }
     }
 }

@@ -9,54 +9,49 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button num0, num1, num2, num3, num4, num5, num6, num7, num8, num9;
-    private Button plus, minus, multiply, divide;
-    private Button equal;
-    private Button clear;
+    private static final int STANDARD_MODE = 1;
+    private static final int ADVANCE_MODE = 2;
 
-    private Button calculatorMode;
-    private Button modulus, power, max, min;
-
-    private LinearLayout advanceLayout;
+    private LinearLayout advanceButtonLayout;
     private TextView output;
-    private String calculationString = " ";
+    private String resultString = "";
 
     private Calculator calculator = new Calculator();
-    private int mode = 1;   // Standard mode
+    private int mode = STANDARD_MODE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        num0 = findViewById(R.id.zero);
-        num1 = findViewById(R.id.one);
-        num2 = findViewById(R.id.two);
-        num3 = findViewById(R.id.three);
-        num4 = findViewById(R.id.four);
-        num5 = findViewById(R.id.five);
-        num6 = findViewById(R.id.six);
-        num7 = findViewById(R.id.seven);
-        num8 = findViewById(R.id.eight);
-        num9 = findViewById(R.id.nine);
+        Button num0 = findViewById(R.id.zero);
+        Button num1 = findViewById(R.id.one);
+        Button num2 = findViewById(R.id.two);
+        Button num3 = findViewById(R.id.three);
+        Button num4 = findViewById(R.id.four);
+        Button num5 = findViewById(R.id.five);
+        Button num6 = findViewById(R.id.six);
+        Button num7 = findViewById(R.id.seven);
+        Button num8 = findViewById(R.id.eight);
+        Button num9 = findViewById(R.id.nine);
 
-        plus = findViewById(R.id.plus);
-        minus = findViewById(R.id.minus);
-        multiply = findViewById(R.id.multiply);
-        divide = findViewById(R.id.divide);
-        equal = findViewById(R.id.equal);
+        Button plus = findViewById(R.id.plus);
+        Button minus = findViewById(R.id.minus);
+        Button multiply = findViewById(R.id.multiply);
+        Button divide = findViewById(R.id.divide);
+        Button equal = findViewById(R.id.equal);
 
-        clear = findViewById(R.id.clear);
+        Button clear = findViewById(R.id.clear);
         output = findViewById(R.id.output);
 
-        calculatorMode = findViewById(R.id.calculator_mode);
-        modulus = findViewById(R.id.modulus);
-        power = findViewById(R.id.power);
-        max = findViewById(R.id.max);
-        min = findViewById(R.id.min);
+        Button calculatorMode = findViewById(R.id.calculator_mode);
+        Button modulus = findViewById(R.id.modulus);
+        Button power = findViewById(R.id.power);
+        Button max = findViewById(R.id.max);
+        Button min = findViewById(R.id.min);
 
-        advanceLayout = findViewById(R.id.advance_buttons_layout);
-        advanceLayout.setVisibility(View.INVISIBLE);
+        advanceButtonLayout = findViewById(R.id.advance_buttons_layout);
+        advanceButtonLayout.setVisibility(View.INVISIBLE);
 
         num0.setOnClickListener(this);
         num1.setOnClickListener(this);
@@ -85,133 +80,55 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        Button v = (Button) view;
+        Button button = (Button) view;
 
-        if (id == R.id.zero) {
-            calculationString += v.getText().toString();
-            output.setText(calculationString);
+        // Concatenate the string into the result string
+        // Set the result string to the output for display
+        // Add the string to the list of values of the calculator
+        if (id == R.id.zero || id == R.id.one || id == R.id.two || id == R.id.three || id == R.id.four
+                || id == R.id.five || id == R.id.six || id == R.id.seven || id == R.id.eight || id == R.id.nine
+                || id == R.id.plus || id == R.id.minus || id == R.id.multiply || id == R.id.divide
+                || id == R.id.modulus || id == R.id.power || id == R.id.max || id == R.id.min) {
+            String buttonText = button.getText().toString();
+            resultString += " " + buttonText;
+            output.setText(resultString);
 
-            calculator.push(v.getText().toString());
-        }
-        if (id == R.id.one) {
-            calculationString += v.getText().toString();
-            output.setText(calculationString);
-
-            calculator.push(v.getText().toString());
-        }
-        if (id == R.id.two) {
-            calculationString += v.getText().toString();
-            output.setText(calculationString);
-
-            calculator.push(v.getText().toString());
-        }
-        if (id == R.id.three) {
-            calculationString += v.getText().toString();
-            output.setText(calculationString);
-
-            calculator.push(v.getText().toString());
-        }
-        if (id == R.id.four) {
-            calculationString += v.getText().toString();
-            output.setText(calculationString);
-
-            calculator.push(v.getText().toString());
-        }
-        if (id == R.id.five) {
-            calculationString += v.getText().toString();
-            output.setText(calculationString);
-
-            calculator.push(v.getText().toString());
-        }
-        if (id == R.id.six) {
-            calculationString += v.getText().toString();
-            output.setText(calculationString);
-
-            calculator.push(v.getText().toString());
-        }
-        if (id == R.id.seven) {
-            calculationString += v.getText().toString();
-            output.setText(calculationString);
-
-            calculator.push(v.getText().toString());
-        }
-        if (id == R.id.eight) {
-            calculationString += v.getText().toString();
-            output.setText(calculationString);
-
-            calculator.push(v.getText().toString());
-        }
-        if (id == R.id.nine) {
-            calculationString += v.getText().toString();
-            output.setText(calculationString);
-
-            calculator.push(v.getText().toString());
-        }
-        if (id == R.id.plus) {
-            calculationString += v.getText().toString();
-            output.setText(calculationString);
-
-            calculator.push(v.getText().toString());
-        }
-        if (id == R.id.minus) {
-            calculationString += v.getText().toString();
-            output.setText(calculationString);
-
-            calculator.push(v.getText().toString());
-        }
-        if (id == R.id.multiply) {
-            calculationString += v.getText().toString();
-            output.setText(calculationString);
-
-            calculator.push(v.getText().toString());
-        }
-        if (id == R.id.divide) {
-            calculationString += v.getText().toString();
-            output.setText(calculationString);
-
-            calculator.push(v.getText().toString());
+            calculator.push(buttonText);
         }
 
         if (id == R.id.equal) {
-            calculationString += v.getText().toString();
-            output.setText(calculationString);
+            resultString += " " + button.getText().toString();
+            output.setText(resultString);
+
             int result = calculator.calculate();
             if (result == Calculator.ERROR_VALUE) {
-                calculationString += "Not an Operator";
+                resultString += " " + getString(R.string.not_an_operator);
             } else {
-                calculationString += result;
+                resultString += " " + result;
             }
-            output.setText(calculationString);
+            output.setText(resultString);
         }
 
         if (id == R.id.clear) {
-            calculationString = "";
-            output.setText(calculationString);
+            resultString = "";
+            output.setText(resultString);
             calculator.clearCalculator();
         }
 
-        // Part 2
-        if (id == R.id.modulus || id == R.id.power || id == R.id.max || id == R.id.min) {
-            calculationString += v.getText().toString();
-            output.setText(calculationString);
-
-            calculator.push(v.getText().toString());
-        }
-
         if (id == R.id.calculator_mode) {
-            if (mode == 1) {
-                v.setText("STANDARD");
+            if (mode == STANDARD_MODE) {
+                button.setText(R.string.standard_mode);
                 switchCalculatorMode();
-                advanceLayout.setVisibility(View.VISIBLE);
+                advanceButtonLayout.setVisibility(View.VISIBLE);
             } else {
-                v.setText("ADVANCE - SCIENTIFIC");
+                button.setText(R.string.advance_mode);
                 switchCalculatorMode();
-                advanceLayout.setVisibility(View.INVISIBLE);
+                advanceButtonLayout.setVisibility(View.INVISIBLE);
             }
         }
     }
 
     private void switchCalculatorMode() {
-        mode = mode == 1 ? 2 : 1;
+        mode = mode == STANDARD_MODE ? ADVANCE_MODE : STANDARD_MODE;
     }
 }
