@@ -110,7 +110,11 @@ public class Calculator {
                     return ERROR_VALUE;
                 }
             case "%":
-                return num1 % num2;
+                if (num2 != 0) {
+                    return num1 % num2;
+                } else {
+                    return ERROR_VALUE;
+                }
             case "pow":
                 return (int) Math.pow(num1, num2);
             case "Max":
