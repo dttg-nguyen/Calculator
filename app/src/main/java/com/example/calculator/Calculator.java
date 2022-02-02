@@ -37,10 +37,13 @@ public class Calculator {
         // Validate 3 elements to be numbers and operator
         boolean isValid = validate(num1, operator, num2);
 
-        if (isValid) {
-           result = calculateExpression(Integer.parseInt(num1), operator, Integer.parseInt(num2));
-        } else {
+        if (!isValid) {
             return ERROR_VALUE;
+        }
+
+        result = calculateExpression(Integer.parseInt(num1), operator, Integer.parseInt(num2));
+        if (result == ERROR_VALUE) {
+            return result;
         }
 
         // If the size of the list after the 1st iteration is odd, the expression is invalid.
@@ -55,10 +58,13 @@ public class Calculator {
 
             isValid = validate(operator, num2);
 
-            if (isValid) {
-                result = calculateExpression(result, operator, Integer.parseInt(num2));
-            } else {
+            if (!isValid) {
                 return ERROR_VALUE;
+            }
+
+            result = calculateExpression(result, operator, Integer.parseInt(num2));
+            if (result == ERROR_VALUE) {
+                return result;
             }
         }
         return result;
