@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         minus.setOnClickListener(this);
         multiply.setOnClickListener(this);
         divide.setOnClickListener(this);
+
         equal.setOnClickListener(this);
         clear.setOnClickListener(this);
 
@@ -81,23 +82,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         int id = view.getId();
         Button button = (Button) view;
-
-        // Concatenate the string into the result string
-        // Set the result string to the output for display
-        // Add the string to the list of values of the calculator
-        if (id == R.id.zero || id == R.id.one || id == R.id.two || id == R.id.three || id == R.id.four
-                || id == R.id.five || id == R.id.six || id == R.id.seven || id == R.id.eight || id == R.id.nine
-                || id == R.id.plus || id == R.id.minus || id == R.id.multiply || id == R.id.divide
-                || id == R.id.modulus || id == R.id.power || id == R.id.max || id == R.id.min) {
-            String buttonText = button.getText().toString();
-            resultString += " " + buttonText;
-            output.setText(resultString);
-
-            calculator.push(buttonText);
-        }
+        String buttonText = button.getText().toString();
 
         if (id == R.id.equal) {
-            resultString += " " + button.getText().toString();
+            resultString += " " + buttonText;
             output.setText(resultString);
 
             int result = calculator.calculate();
@@ -107,15 +95,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 resultString += " " + result;
             }
             output.setText(resultString);
-        }
 
-        if (id == R.id.clear) {
+        } else if (id == R.id.clear) {
             resultString = "";
             output.setText(resultString);
             calculator.clearCalculator();
-        }
 
-        if (id == R.id.calculator_mode) {
+        } else if (id == R.id.calculator_mode) {
             if (mode == STANDARD_MODE) {
                 button.setText(R.string.standard_mode);
                 switchCalculatorMode();
@@ -125,6 +111,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 switchCalculatorMode();
                 advanceButtonLayout.setVisibility(View.INVISIBLE);
             }
+
+        } else {
+            resultString += " " + buttonText;
+            output.setText(resultString);
+
+            calculator.push(buttonText);
         }
     }
 
